@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xmlns="http://maven.apache.org/POM/4.0.0"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.github.wangqian-projects</groupId>
+	<artifactId>aster-cloud-build</artifactId>
+	<version>0.0.1</version>
+
+	<packaging>pom</packaging>
+	<name>Aster Cloud Parent</name>
+	<description>Aster Cloud parent pom, managing plugins and dependencies for Aster
+		Cloud projects
+	</description>
+	<modules>
+		<module>aster-cloud-dependencies-parent</module>
+		<module>aster-cloud-build-dependencies</module>
+	</modules>
+	<url>https://github.com/wangqian-projects/aster-cloud-build</url>
+
+	<properties>
+		<java.version>1.8</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<aster-cloud-build.version>0.0.1</aster-cloud-build.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.github.wangqian-projects</groupId>
+				<artifactId>aster-cloud-build-dependencies</artifactId>
+				<version>${aster-cloud-build.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<developers>
+		<developer>
+			<id>wangqian</id>
+			<name>Wang Qian</name>
+			<email>925548289@qq.com</email>
+			<roles>
+				<role>lead</role>
+			</roles>
+		</developer>
+	</developers>
+
+</project>
