@@ -1,114 +1,182 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xmlns="http://maven.apache.org/POM/4.0.0"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.github.wangqian-projects</groupId>
-	<artifactId>aster-cloud-build</artifactId>
-	<version>0.0.1</version>
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.github.wangqian-projects</groupId>
+    <artifactId>aster-cloud-build</artifactId>
+    <version>0.0.1</version>
 
-	<packaging>pom</packaging>
-	<name>Aster Cloud Parent</name>
-	<description>Aster Cloud parent pom, managing plugins and dependencies for Aster
-		Cloud projects
-	</description>
-	<modules>
-		<module>aster-cloud-dependencies-parent</module>
-		<module>aster-cloud-build-dependencies</module>
-	</modules>
-	<url>https://github.com/wangqian-projects/aster-cloud-build</url>
+    <packaging>pom</packaging>
+    <name>Aster Cloud Parent</name>
+    <description>Aster Cloud parent pom, managing plugins and dependencies for Aster
+        Cloud projects
+    </description>
+    <modules>
+        <module>aster-cloud-dependencies-parent</module>
+        <module>aster-cloud-build-dependencies</module>
+    </modules>
+    <url>https://github.com/wangqian-projects/aster-cloud-build</url>
 
-	<properties>
-		<java.version>1.8</java.version>
-		<maven.compiler.source>${java.version}</maven.compiler.source>
-		<maven.compiler.target>${java.version}</maven.compiler.target>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<aster-cloud-build.version>0.0.1</aster-cloud-build.version>
+    <developers>
+        <developer>
+            <id>wangqian</id>
+            <name>Wang Qian</name>
+            <email>925548289@qq.com</email>
+            <roles>
+                <role>lead</role>
+            </roles>
+        </developer>
+    </developers>
 
-		<!-- Plugins -->
-		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-	</properties>
+    <properties>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <aster-cloud-build.version>0.0.1</aster-cloud-build.version>
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>com.github.wangqian-projects</groupId>
-				<artifactId>aster-cloud-build-dependencies</artifactId>
-				<version>${aster-cloud-build.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+        <!-- Plugins -->
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <spring-boot-maven-plugin.version>2.3.3.RELEASE</spring-boot-maven-plugin.version>
+        <spring.checkstyle.version>0.0.23</spring.checkstyle.version>
+        <git.commit.version>2.2.5</git.commit.version>
 
-	<dependencies>
-		<!--actuator-->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-		<!--Lombok-->
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<scope>compile</scope>
-			<optional>true</optional>
-		</dependency>
-		<!--测试-->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+        <docker.registry>172.17.0.111</docker.registry>
+        <docker.host>http://172.17.0.111:2375</docker.host>
+        <docker.namespace>library</docker.namespace>
+        <docker.username>username</docker.username>
+        <docker.password>password</docker.password>
+        <docker.plugin.version>0.33.0</docker.plugin.version>
+        <!--  默认忽略docker构建 -->
+        <docker.skip>true</docker.skip>
+    </properties>
 
-	<developers>
-		<developer>
-			<id>wangqian</id>
-			<name>Wang Qian</name>
-			<email>925548289@qq.com</email>
-			<roles>
-				<role>lead</role>
-			</roles>
-		</developer>
-	</developers>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.github.wangqian-projects</groupId>
+                <artifactId>aster-cloud-build-dependencies</artifactId>
+                <version>${aster-cloud-build.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-	<build>
-	<!-- Turn on filtering by default for application properties -->
-	<resources>
-		<resource>
-			<directory>${basedir}/src/main/resources</directory>
-			<filtering>true</filtering>
-			<includes>
-				<include>**/application*.yml</include>
-				<include>**/application*.properties</include>
-			</includes>
-		</resource>
-		<resource>
-			<directory>${basedir}/src/main/resources</directory>
-			<excludes>
-				<exclude>**/application*.yml</exclude>
-				<exclude>**/application*.properties</exclude>
-			</excludes>
-		</resource>
-	</resources>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>${maven-compiler-plugin.version}</version>
-					<configuration>
-						<source>${maven.compiler.source}</source>
-						<target>${maven.compiler.target}</target>
-						<compilerArgument>-parameters</compilerArgument>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
+    <dependencies>
+        <!--配置文件处理器-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!--actuator-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!--Lombok-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>compile</scope>
+            <optional>true</optional>
+        </dependency>
+        <!--测试-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
+    <build>
+        <finalName>${project.name}</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <pluginManagement>
+            <plugins>
+                <!-- maven compiler 插件-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <source>${maven.compiler.source}</source>
+                        <target>${maven.compiler.target}</target>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                        <compilerArgument>-parameters</compilerArgument>
+                    </configuration>
+                </plugin>
+                <!--spring boot 默认插件-->
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!--maven  docker 打包插件 -->
+                <plugin>
+                    <groupId>io.fabric8</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>${docker.plugin.version}</version>
+                    <configuration>
+                        <dockerHost>${docker.host}</dockerHost>
+                        <registry>${docker.registry}</registry>
+                        <authConfig>
+                            <push>
+                                <username>${docker.username}</username>
+                                <password>${docker.password}</password>
+                            </push>
+                        </authConfig>
+                        <images>
+                            <image>
+                                <name>${docker.registry}/${docker.namespace}/${project.name}:${project.version}</name>
+                                <build>
+                                    <dockerFile>${project.basedir}/Dockerfile</dockerFile>
+                                </build>
+                            </image>
+                        </images>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <!--代码格式插件，默认使用spring 规则-->
+            <plugin>
+                <groupId>io.spring.javaformat</groupId>
+                <artifactId>spring-javaformat-maven-plugin</artifactId>
+                <version>${spring.checkstyle.version}</version>
+            </plugin>
+            <!--代码编译指定版本插件-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <!--打包关联最新 git commit 信息插件-->
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>${git.commit.version}</version>
+            </plugin>
+        </plugins>
+    </build>
 
 
 </project>
